@@ -41,6 +41,7 @@ export class RecipeEditComponent implements OnInit {
     }
     this.onCancel();
   }
+
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
@@ -53,6 +54,10 @@ export class RecipeEditComponent implements OnInit {
     )
   }
 
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+  }
+
   onCancel() {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
@@ -60,6 +65,7 @@ export class RecipeEditComponent implements OnInit {
   getControls() {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
+
   private initForm() {
     let recipeName = '';
     let recipeImagePath = '';
@@ -84,6 +90,7 @@ export class RecipeEditComponent implements OnInit {
         }
       }
     }
+
     this.recipeForm = new FormGroup({
       'name': new FormControl(recipeName, Validators.required),
       'imagePath': new FormControl(recipeImagePath, Validators.required),
